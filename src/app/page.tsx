@@ -1,103 +1,135 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+const placeholderImage = "/placeholder.jpg"; // Voeg zelf een afbeelding toe in public/
+
+const openingVideos = [
+  {
+    title: "Italiaanse Opening",
+    url: "https://www.youtube.com/embed/2j6T4weDf2E",
+  },
+  {
+    title: "Siciliaanse Verdediging",
+    url: "https://www.youtube.com/embed/5zTy_GeAksc",
+  },
+  {
+    title: "Koningsindische Opening",
+    url: "https://www.youtube.com/embed/ZwN2tP8bq-o",
+  },
+];
 
 export default function Home() {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // Simpele login simulatie
+    setIsLoggedIn(true);
+  };
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 p-6 sm:p-12 flex flex-col items-center font-sans">
+      {/* Who am I Card */}
+      <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="bg-white dark:bg-gray-900 rounded-xl shadow-lg max-w-md w-full p-6 flex flex-col items-center text-center"
+      >
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
+          src={placeholderImage}
+          alt="Profielfoto"
+          width={120}
+          height={120}
+          className="rounded-full object-cover"
           priority
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-gray-100">
+          Jan de Schaakmeester
+        </h1>
+        <p className="mt-2 text-gray-700 dark:text-gray-300">
+          Professioneel schaakleraar met 10 jaar ervaring. Leer bij mij privé
+          schaaklessen en word een meester op het bord!
+        </p>
+      </motion.div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Opening Theorie Tabs */}
+      <section className="mt-12 w-full max-w-4xl">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+          Schaakopening Theorie Video's
+        </h2>
+
+        <div className="flex flex-wrap gap-4 mb-6 justify-center">
+          {openingVideos.map((video, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedTab(idx)}
+              className={`px-4 py-2 rounded-full font-semibold ${
+                selectedTab === idx
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition"
+              }`}
+            >
+              {video.title}
+            </button>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
+          <iframe
+            src={openingVideos[selectedTab].url}
+            title={openingVideos[selectedTab].title}
+            allowFullScreen
+            className="w-full h-full"
+          ></iframe>
+        </div>
+      </section>
+
+      {/* Login / Betaalde Content */}
+      <section className="mt-12 w-full max-w-md text-center">
+        {!isLoggedIn ? (
+          <>
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+              Login om exclusieve schaaklessen te bekijken
+            </h2>
+            <button
+              onClick={handleLogin}
+              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition"
+            >
+              Login
+            </button>
+          </>
+        ) : (
+          <>
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+              Welkom, Jan! Hier zijn je exclusieve schaaklessen:
+            </h2>
+            <ul className="text-left space-y-3 mb-6">
+              <li className="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow">
+                <strong>Privé les 1:</strong> Opening strategieën uitgelegd
+              </li>
+              <li className="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow">
+                <strong>Privé les 2:</strong> Middenspel tactieken
+              </li>
+              <li className="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow">
+                <strong>Privé les 3:</strong> Eindspel technieken
+              </li>
+            </ul>
+            <button
+              onClick={handleLogout}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-semibold transition"
+            >
+              Logout
+            </button>
+          </>
+        )}
+      </section>
     </div>
   );
 }
