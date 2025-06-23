@@ -62,7 +62,7 @@ export default function Home() {
       {/* Opening Theorie Tabs */}
       <section className="mt-12 w-full max-w-4xl">
         <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-          Schaakopening Theorie Video's
+          Schaakopening Theorie Videos
         </h2>
 
         <div className="flex flex-wrap gap-4 mb-6 justify-center">
